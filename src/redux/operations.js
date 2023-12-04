@@ -6,7 +6,7 @@ axios.defaults.baseURL =
 
 export const fetchContacts = createAsyncThunk(
   'contacts/getContacts',
-  async () => {
+  async (_, thunkAPI) => {
     try {
       const response = await axios.get('contacts');
       return response.data;
@@ -23,7 +23,7 @@ export const addContact = createAsyncThunk(
       const response = await axios.post('contacts', object);
       return response.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(err.message);
     }
   }
 );
