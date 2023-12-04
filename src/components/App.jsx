@@ -4,15 +4,10 @@ import Section from './section/section';
 import Filter from './filter/filter';
 
 import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   addContact,
-//   deleteContact,
-//   filterContacts,
-// } from 'redux/contactsSlice';
-import { nanoid } from '@reduxjs/toolkit';
 import { addContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
 import { filterContacts } from 'redux/filterSlice';
+import Notiflix from 'notiflix';
 
 function Phonebook() {
   const contacts = useSelector(state => state.phonebook.contacts);
@@ -21,7 +16,7 @@ function Phonebook() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchedContacts = dispatch(fetchContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   const addNewContact = e => {
@@ -29,8 +24,19 @@ function Phonebook() {
     const newName = e.target.name.value;
     const newNumber = e.target.number.value;
 
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === newName.toLowerCase()
+      )
+    ) {
+      return Notiflix.Report.failure(
+        'Error',
+        `${newName} is already in contacts`,
+        'OK'
+      );
+    }
+
     const newContact = {
-      // id: nanoid(),
       name: newName,
       number: newNumber,
     };
