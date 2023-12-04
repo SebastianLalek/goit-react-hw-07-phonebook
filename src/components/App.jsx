@@ -4,7 +4,7 @@ import Section from './section/section';
 import Filter from './filter/filter';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, fetchContacts } from 'redux/operations';
+import { addContact, deleteContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
 import { filterContacts } from 'redux/filterSlice';
 import Notiflix from 'notiflix';
@@ -47,7 +47,7 @@ function Phonebook() {
   const handleDeleteContact = e => {
     const contactId = e.target.id;
     console.log(contactId);
-    // dispatch(deleteContact(contactId));
+    dispatch(deleteContact(contactId));
   };
 
   const handleChange = e => {
