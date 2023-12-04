@@ -4,12 +4,14 @@ import Section from './section/section';
 import Filter from './filter/filter';
 
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addContact,
-  deleteContact,
-  filterContacts,
-} from 'redux/contactsSlice';
+// import {
+//   addContact,
+//   deleteContact,
+//   filterContacts,
+// } from 'redux/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
+import { addContact } from 'redux/operations';
+import { useEffect } from 'react';
 
 function Phonebook() {
   const contacts = useSelector(state => state.phonebook.contacts);
@@ -23,7 +25,7 @@ function Phonebook() {
     const newNumber = e.target.number.value;
 
     const newContact = {
-      id: nanoid(),
+      // id: nanoid(),
       name: newName,
       number: newNumber,
     };
@@ -33,11 +35,13 @@ function Phonebook() {
 
   const handleDeleteContact = e => {
     const contactId = e.target.id;
-    dispatch(deleteContact(contactId));
+    console.log(contactId)
+    // dispatch(deleteContact(contactId));
   };
 
   const handleChange = e => {
-    dispatch(filterContacts(e.target.value));
+    console.log(e)
+    // dispatch(filterContacts(e.target.value));
   };
 
   const filteredContacts = () => {
@@ -57,7 +61,7 @@ function Phonebook() {
       </Section>
       <Section title="Contacts">
         <ContactList
-          contacts={filteredContacts()}
+          contacts={contacts}
           onClick={handleDeleteContact}
         >
           <Filter onChange={handleChange} onSubmit={preventSubmit} />
