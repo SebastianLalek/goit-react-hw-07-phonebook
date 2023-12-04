@@ -10,14 +10,19 @@ import { useDispatch, useSelector } from 'react-redux';
 //   filterContacts,
 // } from 'redux/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { addContact } from 'redux/operations';
+import { addContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
+import { filterContacts } from 'redux/filterSlice';
 
 function Phonebook() {
   const contacts = useSelector(state => state.phonebook.contacts);
-  const filter = useSelector(state => state.phonebook.filter);
+  const filter = useSelector(state => state.filter.filter);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchedContacts = dispatch(fetchContacts());
+  }, [dispatch]);
 
   const addNewContact = e => {
     e.preventDefault();
@@ -35,13 +40,12 @@ function Phonebook() {
 
   const handleDeleteContact = e => {
     const contactId = e.target.id;
-    console.log(contactId)
+    console.log(contactId);
     // dispatch(deleteContact(contactId));
   };
 
   const handleChange = e => {
-    console.log(e)
-    // dispatch(filterContacts(e.target.value));
+    dispatch(filterContacts(e.target.value));
   };
 
   const filteredContacts = () => {
@@ -61,7 +65,7 @@ function Phonebook() {
       </Section>
       <Section title="Contacts">
         <ContactList
-          contacts={contacts}
+          contacts={filteredContacts()}
           onClick={handleDeleteContact}
         >
           <Filter onChange={handleChange} onSubmit={preventSubmit} />
@@ -75,10 +79,8 @@ export const App = () => {
   return (
     <div
       style={{
-        height: '100vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
         fontSize: 25,
         color: '#010101',
       }}
