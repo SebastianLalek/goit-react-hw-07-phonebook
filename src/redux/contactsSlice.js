@@ -51,44 +51,4 @@ const contactsSlice = createSlice({
   },
 });
 
-// const contactsSlice = createSlice({
-//   name: 'phonebook',
-//   initialState,
-//   reducers: {
-//     addContact(state, action) {
-//       if (
-//         state.contacts.find(
-//           contact =>
-//             contact.name.toLowerCase() === action.payload.name.toLowerCase()
-//         )
-//       ) {
-//         return Notiflix.Report.failure(
-//           'Error',
-//           `${action.payload.name} is already in contacts`,
-//           'OK'
-//         );
-//       }
-//       state.contacts.push(action.payload);
-//     },
-//     deleteContact(state, action) {
-//       state.contacts = state.contacts.filter(
-//         contact => contact.id !== action.payload
-//       );
-//     },
-//     filterContacts(state, action) {
-//       state.filter = action.payload;
-//     },
-//     loadFromLoacalStorage(state, action) {
-//       state.contacts = action.payload;
-//     },
-//   },
-// });
-
 export const contactsReducer = contactsSlice.reducer;
-
-// export const {
-//   addContact,
-//   deleteContact,
-//   filterContacts,
-//   loadFromLoacalStorage,
-// } = contactsSlice.actions;
