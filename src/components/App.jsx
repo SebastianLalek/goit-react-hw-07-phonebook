@@ -6,9 +6,8 @@ import Filter from './filter/filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
-import { filterContacts } from 'redux/filterSlice';
 import Notiflix from 'notiflix';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 
 function Phonebook() {
   const contacts = useSelector(selectContacts);
@@ -44,14 +43,6 @@ function Phonebook() {
     dispatch(addContact(newContact));
   };
 
-  const handleChange = e => {
-    dispatch(filterContacts(e.target.value));
-  };
-
-  const preventSubmit = e => {
-    e.preventDefault();
-  };
-
   return (
     <div>
       <Section title="Phonebook">
@@ -59,7 +50,7 @@ function Phonebook() {
       </Section>
       <Section title="Contacts">
         <ContactList>
-          <Filter onChange={handleChange} onSubmit={preventSubmit} />
+          <Filter />
         </ContactList>
       </Section>
     </div>
