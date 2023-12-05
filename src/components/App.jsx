@@ -4,14 +4,14 @@ import Section from './section/section';
 import Filter from './filter/filter';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact, fetchContacts } from 'redux/operations';
+import { addContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
 import { filterContacts } from 'redux/filterSlice';
 import Notiflix from 'notiflix';
+import { selectContacts, selectFilter } from 'redux/selectors';
 
 function Phonebook() {
-  const contacts = useSelector(state => state.phonebook.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
@@ -44,20 +44,8 @@ function Phonebook() {
     dispatch(addContact(newContact));
   };
 
-  const handleDeleteContact = e => {
-    const contactId = e.target.id;
-    console.log(contactId);
-    dispatch(deleteContact(contactId));
-  };
-
   const handleChange = e => {
     dispatch(filterContacts(e.target.value));
-  };
-
-  const filteredContacts = () => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
   };
 
   const preventSubmit = e => {
@@ -70,10 +58,7 @@ function Phonebook() {
         <Form onSubmit={addNewContact} />
       </Section>
       <Section title="Contacts">
-        <ContactList
-          contacts={filteredContacts()}
-          onClick={handleDeleteContact}
-        >
+        <ContactList>
           <Filter onChange={handleChange} onSubmit={preventSubmit} />
         </ContactList>
       </Section>
